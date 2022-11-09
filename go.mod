@@ -8,7 +8,7 @@ require (
 	cloud.google.com/go/serviceusage v1.2.0
 	cloud.google.com/go/storage v1.22.1
 	filippo.io/age v1.0.0
-	github.com/AlecAivazis/survey/v2 v2.3.5
+	github.com/AlecAivazis/survey/v2 v2.3.6
 	github.com/Azure/azure-sdk-for-go v56.3.0+incompatible
 	github.com/Azure/azure-sdk-for-go/sdk/azcore v1.1.4
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.1.0
