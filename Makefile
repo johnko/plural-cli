@@ -62,7 +62,7 @@ generate: .PHONY
 	go generate ./...
 
 bake-ami: .PHONY
-	cd packer && packer build -var "img_name=plural/ubuntu/$(BUILD)" .
+	cd packer && packer build -var "cli_version=$(APP_VSN)" .
 	@echo "baked ami for all regions"
 
 up: .PHONY # spin up local server
