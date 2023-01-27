@@ -32,6 +32,7 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.1
 	github.com/hashicorp/hcl v1.0.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.20.0
+	github.com/helm/helm-mapkubeapis v0.3.2
 	github.com/imdario/mergo v0.3.13
 	github.com/inancgumus/screen v0.0.0-20190314163918-06e984b86ed3
 	github.com/ktrysmt/go-bitbucket v0.9.55
@@ -93,6 +94,7 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.2.0 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
+	github.com/maorfr/helm-plugin-utils v0.6.0 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/pluralsh/controller-reconcile-helper v0.0.4 // indirect

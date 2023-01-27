@@ -66,6 +66,12 @@ func workspaceCommands() []cli.Command {
 			ArgsUsage: "NAME",
 			Action:    latestVersion(requireArgs(templateHelm, []string{"NAME"})),
 		},
+		{
+			Name:      "helm-mapkubeapis",
+			Usage:     "updates in-place Helm release metadata that contains deprecated or removed Kubernetes APIs to a new instance with supported Kubernetes APIs",
+			ArgsUsage: "NAME",
+			Action:    latestVersion(requireArgs(mapkubeapis, []string{"NAME"})),
+		},
 	}
 }
 
@@ -172,4 +178,14 @@ func templateHelm(c *cli.Context) error {
 	}
 
 	return minimal.TemplateHelm()
+}
+
+func mapkubeapis(c *cli.Context) error {
+	name := c.Args().Get(0)
+	minimal, err := wkspace.Minimal(name)
+	if err != nil {
+		return err
+	}
+
+	return minimal.MapKubeApis()
 }

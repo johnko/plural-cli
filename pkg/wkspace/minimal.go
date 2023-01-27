@@ -15,7 +15,10 @@ import (
 
 	helmdiff "github.com/databus23/helm-diff/v3/diff"
 	diffmanifest "github.com/databus23/helm-diff/v3/manifest"
+	"github.com/helm/helm-mapkubeapis/pkg/common"
+	release "github.com/helm/helm-mapkubeapis/pkg/v3"
 	"github.com/imdario/mergo"
+	"github.com/mitchellh/go-homedir"
 	"github.com/pluralsh/plural/pkg/config"
 	"github.com/pluralsh/plural/pkg/diff"
 	"github.com/pluralsh/plural/pkg/helm"
@@ -196,6 +199,12 @@ func (m *MinimalWorkspace) DiffTerraform() error {
 	return m.runDiff("terraform", "plan")
 }
 
+func (m *MinimalWorkspace) MapKubeApis() error {
+	namespace := m.Config.Namespace(m.Name)
+	utils.Warn("helm mapkubeapis %s --namespace %s\n", m.Name, namespace)
+	return mapKubeApis(m.Name, namespace)
+}
+
 func (m *MinimalWorkspace) runDiff(command string, args ...string) error {
 	diffFolder, err := m.constructDiffFolder()
 	if err != nil {
@@ -279,4 +288,26 @@ func getTemplate(release, namespace string, isUpgrade, validate bool) ([]byte, e
 	var manifests bytes.Buffer
 	fmt.Fprintln(&manifests, strings.TrimSpace(rel.Manifest))
 	return manifests.Bytes(), nil
+}
+
+func mapKubeApis(name, namespace string) error {
+	p, err := homedir.Expand("~/.plural")
+	if err != nil {
+		return err
+	}
+	mapFile := filepath.Join(p, "Map.yaml")
+	if !utils.Exists(mapFile) {
+		err := utils.DownloadFile(mapFile, "https://raw.githubusercontent.com/helm/helm-mapkubeapis/main/config/Map.yaml")
+		if err != nil {
+			return err
+		}
+	}
+	options := common.MapOptions{
+		DryRun:           false,
+		KubeConfig:       common.KubeConfig{},
+		MapFile:          mapFile,
+		ReleaseName:      name,
+		ReleaseNamespace: namespace,
+	}
+	return release.MapReleaseWithUnSupportedAPIs(options)
 }
