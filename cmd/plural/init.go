@@ -30,10 +30,6 @@ func handleInit(c *cli.Context) error {
 		return err
 	}
 
-	if err := handleLogin(c); err != nil {
-		return err
-	}
-
 	if _, err := os.Stat(manifest.ProjectManifestPath()); err == nil && git && !affirm("This repository's workspace.yaml already exists. Would you like to use it?") {
 		fmt.Println("Run `plural init` from empty repository or outside any in order to start from scratch.")
 		return nil
